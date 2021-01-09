@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+:root {
+  --cell-size: 10rem;
+  --mark-size: calc(var(--cell-size) * 0.9);
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.game-board {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+  position: relative;
+  border: solid 1px #000;
+  height: 10rem;
+  width: 10rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell.x,
+.cell.o {
+  cursor: not-allowed;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+  border-top: none;
+}
+
+.cell:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.cell:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.cell:nth-child(7),
+.cell:nth-child(8),
+.cell:last-child {
+  border-bottom: none;
+}
+
+.cell.x::before,
+.cell.x::after,
+.game-board.x .cell:not(.x):not(.o):hover::before,
+.game-board.x .cell:not(.x):not(.o):hover::after {
+  content: '';
+  height: var(--mark-size);
+  width: calc(var(--mark-size) * 0.15);
+  position: absolute;
+}
+
+.cell.x::before,
+.cell.x::after {
+  background-color: #000;
+}
+
+.game-board.x .cell:not(.x):not(.o):hover::before,
+.game-board.x .cell:not(.x):not(.o):hover::after {
+  background-color: lightgrey;
+}
+
+.cell.x::before,
+.game-board.x .cell:hover::before {
+  transform: rotate(-45deg);
+}
+
+.cell.x::after,
+.game-board.x .cell:hover::after {
+  transform: rotate(45deg);
+}
+
+.cell.o::before,
+.cell.o::after,
+.game-board.o .cell:not(.x):not(.o):hover::before,
+.game-board.o .cell:not(.x):not(.o):hover::after {
+  content: '';
+  height: var(--mark-size);
+  width: var(--mark-size);
+  position: absolute;
+  border-radius: 50%;
+}
+
+.cell.o::before {
+  background-color: #000;
+}
+
+.cell.o::after,
+.game-board.o .cell:not(.x):not(.o):hover::after {
+  height: calc(var(--mark-size) * 0.7);
+  width: calc(var(--mark-size) * 0.7);
+  background-color: #fff;
+}
+
+.game-board.o .cell:not(.x):not(.o):hover::before {
+  background-color: lightgrey;
+}
+
+.endgame-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.endgame-text {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+}
+
+.btn--restart {
+  border: solid 1px #fff;
+  border-radius: 5rem;
+  background-color: #fff;
+  font-size: 3rem;
+  padding: 1rem 3rem;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.btn--restart:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.endgame-modal.show {
+  display: flex;
+}
